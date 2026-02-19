@@ -1,0 +1,85 @@
+<div class="form-card">
+  <h2>Angular Reactive Form</h2>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" formControlName="username" placeholder="Enter username">
+      <div class="error" *ngIf="registrationForm.get('username')?.invalid && registrationForm.get('username')?.touched">
+        Username is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" formControlName="email" placeholder="Enter email">
+      <div class="error" *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+        Valid email is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" placeholder="Enter password">
+      <div class="error" *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
+        Password is required (min 6 chars).
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <div class="radio-group">
+        <label><input type="radio" formControlName="gender" value="Male"> Male</label>
+        <label><input type="radio" formControlName="gender" value="Female"> Female</label>
+        <label><input type="radio" formControlName="gender" value="Other"> Other</label>
+      </div>
+      <div class="error" *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched">
+        Gender is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Employment Status</label>
+      <select id="status" formControlName="status">
+        <option value="" disabled selected>Select Status</option>
+        <option value="Permanent">Permanent</option>
+        <option value="Probationary">Probationary</option>
+      </select>
+      <div class="error" *ngIf="registrationForm.get('status')?.invalid && registrationForm.get('status')?.touched">
+        Status is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="comments">Comments (Optional)</label>
+      <textarea id="comments" formControlName="comments" rows="3" placeholder="Additional notes..."></textarea>
+    </div>
+
+    <button type="submit" [disabled]="registrationForm.invalid">Submit Entry</button>
+  </form>
+</div>
+
+<div class="entries-section" *ngIf="submittedEntries.length > 0">
+  <h3>Past Entries</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Gender</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of submittedEntries">
+        <td>{{ entry.username }}</td>
+        <td>{{ entry.email }}</td>
+        <td>{{ entry.status }}</td>
+        <td>{{ entry.gender }}</td>
+        <td>{{ entry.comments || '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

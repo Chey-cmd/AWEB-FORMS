@@ -1,0 +1,54 @@
+<div class="form-card">
+  <h2>Template-Driven Form</h2>
+
+  <form #templateForm="ngForm" (ngSubmit)="onSubmit(templateForm)">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" [(ngModel)]="user.name" required #name="ngModel">
+      <small class="error" *ngIf="name.invalid && name.touched">Name is required.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" [(ngModel)]="user.email" required email #email="ngModel">
+      <small class="error" *ngIf="email.invalid && email.touched">A valid email is required.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" [(ngModel)]="user.password" required minlength="6" #password="ngModel">
+      <small class="error" *ngIf="password.invalid && password.touched">Password is required (min 6 characters).</small>
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <div class="radio-group">
+        <label><input type="radio" name="gender" [(ngModel)]="user.gender" value="Male" required #gender="ngModel"> Male</label>
+        <label><input type="radio" name="gender" [(ngModel)]="user.gender" value="Female" required> Female</label>
+        <label><input type="radio" name="gender" [(ngModel)]="user.gender" value="Other" required> Other</label>
+      </div>
+      <small class="error" *ngIf="gender.invalid && gender.touched">Gender is required.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" name="status" [(ngModel)]="user.status" required #status="ngModel">
+        <option value="" disabled>Select Status</option>
+        <option value="Permanent">Permanent</option>
+        <option value="Probationary">Probationary</option>
+      </select>
+      <small class="error" *ngIf="status.invalid && status.touched">Status is required.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="comments">Comments (Notes)</label>
+      <textarea id="comments" name="comments" [(ngModel)]="user.comments" rows="3" placeholder="Add any notes here..."></textarea>
+    </div>
+
+    <button type="submit" [disabled]="templateForm.invalid">Submit</button>
+  </form>
+
+  <div class="success-message" *ngIf="submitted">
+    <p>Success! Your template form entry has been recorded.</p>
+  </div>
+</div>
