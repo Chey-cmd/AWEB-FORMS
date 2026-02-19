@@ -1,0 +1,82 @@
+<div class="form-card">
+  <h2>IT Help Desk Ticket</h2>
+
+  <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="requesterName">Requester Name</label>
+      <input type="text" id="requesterName" formControlName="requesterName" placeholder="Enter full name">
+      <div class="error" *ngIf="ticketForm.get('requesterName')?.invalid && ticketForm.get('requesterName')?.touched">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="department">Department</label>
+      <input type="text" id="department" formControlName="department" placeholder="e.g. Finance, HR, Engineering">
+      <div class="error" *ngIf="ticketForm.get('department')?.invalid && ticketForm.get('department')?.touched">
+        Department is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="issueCategory">Issue Category</label>
+      <select id="issueCategory" formControlName="issueCategory">
+        <option value="" disabled selected>Select a category</option>
+        <option value="Hardware">Hardware</option>
+        <option value="Software">Software</option>
+        <option value="Network">Network/Internet</option>
+        <option value="Account">Account/Access</option>
+      </select>
+      <div class="error" *ngIf="ticketForm.get('issueCategory')?.invalid && ticketForm.get('issueCategory')?.touched">
+        Category is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Priority Level</label>
+      <div class="radio-group">
+        <label><input type="radio" formControlName="priority" value="Low"> Low</label>
+        <label><input type="radio" formControlName="priority" value="Medium"> Medium</label>
+        <label><input type="radio" formControlName="priority" value="High"> High</label>
+      </div>
+      <div class="error" *ngIf="ticketForm.get('priority')?.invalid && ticketForm.get('priority')?.touched">
+        Priority level is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Issue Description</label>
+      <textarea id="description" formControlName="description" rows="4" placeholder="Describe the issue in detail..."></textarea>
+      <div class="error" *ngIf="ticketForm.get('description')?.invalid && ticketForm.get('description')?.touched">
+        Description is required (minimum 10 characters).
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="ticketForm.invalid">Submit Ticket</button>
+  </form>
+</div>
+
+<div class="entries-section" *ngIf="submittedTickets.length > 0">
+  <h3>Recent Support Tickets</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Requester</th>
+        <th>Department</th>
+        <th>Category</th>
+        <th>Priority</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of submittedTickets">
+        <td>{{ ticket.requesterName }}</td>
+        <td>{{ ticket.department }}</td>
+        <td>{{ ticket.issueCategory }}</td>
+        <td>{{ ticket.priority }}</td>
+        <td>{{ ticket.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
